@@ -98,7 +98,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Pequeno coágulo APERTE nesse botão🤑🤑</h1>
+        <h1>Pequeno coágulo aperte NESTE botão🤑🤑</h1>
         <button id="coaguloBtn" class="coagulo-button">Apertar Coágulo</button>
         <p id="message" class="message"></p>
     </div>
@@ -119,4 +119,41 @@
                 
                 // Calcula horas, minutos e segundos
                 const horas = Math.floor(tempoRestante / (1000 * 60 * 60));
-                const minutos =
+                const minutos = Math.floor((tempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((tempoRestante % (1000 * 60)) / 1000);
+
+                let tempoFormatado = '';
+                if (horas > 0) tempoFormatado += `${horas}h `;
+                if (minutos > 0) tempoFormatado += `${minutos}min `;
+                tempoFormatado += `${segundos}s`;
+
+                messageDisplay.textContent = `Aguarde! Próximo coágulo em: ${tempoFormatado}`;
+                
+                // Atualiza o contador a cada segundo
+                setTimeout(updateButtonState, 1000); 
+
+            } else {
+                coaguloBtn.disabled = false;
+                coaguloBtn.textContent = 'Apertar Coágulo';
+                messageDisplay.textContent = 'Pronto para o próximo coágulo!';
+            }
+        }
+
+        coaguloBtn.addEventListener('click', () => {
+            if (coaguloBtn.disabled) {
+                return; // Impede ação se já estiver desabilitado
+            }
+
+            // Ação do botão (pode ser um alert, uma função, etc.)
+            alert("COÁGULOOO APERTADO! Espera um dia agora, mANGOOO");
+            
+            // Salva o momento do clique
+            localStorage.setItem('ultimo_clique_coagulo', new Date().getTime());
+            updateButtonState(); // Atualiza o estado do botão imediatamente
+        });
+
+        // Inicializa o estado do botão quando a página carrega
+        updateButtonState();
+    </script>
+</body>
+</html>
